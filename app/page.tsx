@@ -18,6 +18,8 @@ import {
   SectionLabel,
 } from "@/components/reusables";
 
+export const dynamic = "force-dynamic";
+
 export default function LandingPage() {
   const { isSignedIn, has } = useAuth();
   const router = useRouter();
