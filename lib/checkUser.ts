@@ -59,7 +59,14 @@ export const checkUser = async () => {
         plan: "free",
       },
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (
+      error &&
+      (error.digest === "DYNAMIC_SERVER_USAGE" ||
+        (error.message && error.message.includes("Dynamic server usage")))
+    ) {
+      throw error;
+    }
     console.error("checkUser error:", error);
     return null;
   }
