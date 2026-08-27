@@ -55,25 +55,9 @@ const PLACEHOLDER_FILES = {
 // ─── Base dependencies ────────────────────────────────────────────────────────
 
 const BASE_DEPENDENCIES: Record<string, string> = {
-  "react-is": "latest",
-  "react-router-dom": "latest",
-  "lucide-react": "latest",
-  recharts: "latest",
-  "date-fns": "latest",
-  "framer-motion": "latest",
-  "react-hook-form": "latest",
-  "@hookform/resolvers": "latest",
-  zod: "latest",
-  "@radix-ui/react-dialog": "latest",
-  "@radix-ui/react-dropdown-menu": "latest",
-  "@radix-ui/react-tabs": "latest",
-  "@radix-ui/react-tooltip": "latest",
-  "@radix-ui/react-accordion": "latest",
-  "@radix-ui/react-select": "latest",
-  axios: "latest",
-  clsx: "latest",
-  "class-variance-authority": "latest",
-  "tailwind-merge": "latest",
+  "lucide-react": "^1.16.0",
+  clsx: "^2.1.1",
+  "tailwind-merge": "^3.0.0",
 };
 
 // ─── Types ────────────────────────────────────────────────────────────────────
