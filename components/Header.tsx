@@ -1,15 +1,13 @@
 import Link from "next/link";
-import { UserButton, SignInButton, Show } from "@clerk/nextjs";
+import { SignInButton, Show } from "@clerk/nextjs";
 import Image from "next/image";
-import { Zap, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { checkUser } from "@/lib/checkUser";
-import { PricingModal } from "@/components/PricingModal";
-import { PLANS } from "@/lib/constants";
-import type { Plan } from "@/types/plans";
+import { UserNav } from "@/components/UserNav";
 
 export default async function Header() {
-  const user = await checkUser();
+  await checkUser();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-white/6 bg-white/7 backdrop-blur-md">
@@ -35,16 +33,7 @@ export default async function Header() {
               Projects
             </Link>
 
-            {user && (
-              <PricingModal>
-                <span className="inline-flex h-8 items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 text-xs text-white/70">
-                  <Zap className="h-3 w-3 fill-white/70" />
-                  {user.credits} credits
-                </span>
-              </PricingModal>
-            )}
-
-            <UserButton />
+            <UserNav />
           </Show>
 
           <Show when="signed-out">

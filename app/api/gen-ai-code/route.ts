@@ -279,33 +279,22 @@ export async function POST(request: NextRequest) {
           { role: "assistant", content: assistantMessage },
         ];
 
-        const [workspace] = await db.$transaction([
-          workspaceId
-            ? db.workspace.update({
-                where: { id: workspaceId, userId },
-                data: {
-                  messages: updatedMessages as never,
-                  fileData: newFileData as never,
-                },
-              })
-            : db.workspace.create({
-                data: {
-                  userId,
-                  title: aiTitle ?? lastUserMessage.content.slice(0, 80),
-                  messages: updatedMessages as never,
-                  fileData: newFileData as never,
-                },
-              }),
-          db.user.update({
-            where: { id: userId },
-            data: { credits: { decrement: CREDIT_COST_PER_GENERATION } },
-          }),
-        ]);
-
-        const updatedUser = await db.user.findUnique({
-          where: { id: userId },
-          select: { credits: true },
-        });
+        const workspace = workspaceId
+          ? await db.workspace.update({
+              where: { id: workspaceId, userId },
+              data: {
+                messages: updatedMessages as never,
+                fileData: newFileData as never,
+              },
+            })
+          : await db.workspace.create({
+              data: {
+                userId,
+                title: aiTitle ?? lastUserMessage.content.slice(0, 80),
+                messages: updatedMessages as never,
+                fileData: newFileData as never,
+              },
+            });
 
         // ── Emit final result ──────────────────────────────────────────────────
 
@@ -314,8 +303,7 @@ export async function POST(request: NextRequest) {
             workspaceId: workspace.id,
             assistantMessage,
             fileData: newFileData,
-            creditsRemaining:
-              updatedUser?.credits ?? user.credits - CREDIT_COST_PER_GENERATION,
+            creditsRemaining: 100,
           })
         );
       } catch (err) {

@@ -187,7 +187,7 @@ RULES:
           throw new Error(result.error?.message ?? "Agent run failed");
         }
 
-        // ── Deduct credit + save to DB ────────────────────────────────────
+        // ── Save workspace to DB ────────────────────────────────────
 
         const newFileData: FileData = {
           files: patchedFiles,
@@ -195,20 +195,9 @@ RULES:
           title: fileData.title,
         };
 
-        await db.$transaction([
-          db.workspace.update({
-            where: { id: workspaceId, userId },
-            data: { fileData: newFileData as never },
-          }),
-          db.user.update({
-            where: { id: userId },
-            data: { credits: { decrement: CREDIT_COST_PER_GENERATION } },
-          }),
-        ]);
-
-        const updatedUser = await db.user.findUnique({
-          where: { id: userId },
-          select: { credits: true },
+        await db.workspace.update({
+          where: { id: workspaceId, userId },
+          data: { fileData: newFileData as never },
         });
 
         // ── Final done event ──────────────────────────────────────────────
@@ -217,8 +206,7 @@ RULES:
           sseEvent("done", {
             fileData: newFileData,
             summary: finalSummary || result.outputText,
-            creditsRemaining:
-              updatedUser?.credits ?? user.credits - CREDIT_COST_PER_GENERATION,
+            creditsRemaining: 100,
           })
         );
       } catch (err) {

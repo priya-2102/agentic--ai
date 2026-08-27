@@ -1,24 +1,24 @@
 export const PLANS = {
   free: {
     label: "Free",
-    credits: 10,
+    credits: 100,
     price: 0,
   },
   starter: {
     label: "Starter",
-    credits: 50,
+    credits: 100,
     price: 9,
   },
   pro: {
     label: "Pro",
-    credits: 150,
+    credits: 100,
     price: 29,
   },
 } as const;
 
-export const CREDIT_COST_PER_GENERATION = 1;
+export const CREDIT_COST_PER_GENERATION = 0;
 
-export const MIN_CREDITS_TO_GENERATE = 1;
+export const MIN_CREDITS_TO_GENERATE = 0;
 
 export const PRICING_PLANS = [
   {
@@ -29,7 +29,7 @@ export const PRICING_PLANS = [
     featured: false,
     planId: null,
     active: true,
-    features: ["10 generations / month", "Live preview", "Export to zip"],
+    features: ["100 generations / month", "Live preview", "Export to zip"],
   },
   {
     key: "starter",
@@ -40,7 +40,7 @@ export const PRICING_PLANS = [
     planId: "cplan_3DvxGsOeYA5bpJzGWPi8o7wScRD",
     active: false,
     features: [
-      "50 generations / month",
+      "100 generations / month",
       "Image uploads",
       "Live preview",
       "Export to zip",
@@ -55,7 +55,7 @@ export const PRICING_PLANS = [
     planId: "cplan_3DvxTfywwB0NyQ1iqANclgNqlq8",
     active: false,
     features: [
-      "150 generations / month",
+      "100 generations / month",
       "Priority AI (faster response)",
       "Live preview",
       "Export to zip",
